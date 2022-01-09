@@ -42,15 +42,15 @@ const HoldingsAndEarnings = () => {
     const {totalDistributed, userEarnings, userUnpaidEarnings} = useDistributorContract();
 
     const cards = {
-        "Your Holdings": userBalance,
-        "Your Earnings": userEarnings,
+        "$POWL Balance": userBalance,
+        "Claimed $USDC": userEarnings,
         "Total Printed": totalDistributed,
-        "Unpaid Earnings": userUnpaidEarnings
+        "Unclaimed $USDC": userUnpaidEarnings
     }
 
     return (
         <div style={styles.container}>
-            <h1 style={{marginBottom: "16px"}}>Dashboard</h1>
+            <h1 style={{marginBottom: "16px"}}>Powell Printer Dashboard</h1>
             <Row gutter={[16, 16]} style={styles.row}>
                 {
                     Object.keys(cards).map((title, index) => (

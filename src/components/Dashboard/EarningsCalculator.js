@@ -24,14 +24,24 @@ const EarningsCalculator = () => {
 
     const { userBalance} = useEtherprintContract();
     const { totalShares } = useDistributorContract();
-    const { quoteUSDToPowl } = usePairContract();
+    const { quoteUSDToPowl, quoteUSD } = usePairContract();
 
-    const [holdings, setHoldings] = useState(userBalance);
+    const [usdcBalance, setUsdcBalance] = useState(userBalance);
+    const [powlBalance, setPowlBalance] = useState(userBalance)
     const [volume, setVolume] = useState(0);
-    const [reinvestmentRate, setReinvestmentRate] = useState(0)
 
     const calculateEarnings = (days) => {
-        return volume * quoteUSDToPowl(holdings) / Number(totalShares) * 0.12 * days;
+        return volume * powlBalance / Number(totalShares) * 0.12 * days;
+    }
+
+    const updatePowlBalance = (balance) => {
+        setPowlBalance(balance);
+        setUsdcBalance(quoteUSD(balance));
+    }
+
+    const updateUsdcBalance = (balance) => {
+        setUsdcBalance(balance);
+        setPowlBalance(quoteUSDToPowl(balance));
     }
 
     return (
@@ -40,10 +50,18 @@ const EarningsCalculator = () => {
             <RaisedCard style={styles.card}>
                 <h2>Dividends: ${c2.format(calculateEarnings(1))} / 24hr</h2>
                 <InputSlider
-                    title={"Holdings"}
-                    state={holdings}
-                    setState={setHoldings}
-                    max={1000000}
+                    title={"$POWL Balance"}
+                    state={powlBalance}
+                    displayVal={powlBalance.toExponential(4)}
+                    setState={updatePowlBalance}
+                    max={quoteUSDToPowl(50000)}
+                    suffix={" $POWL"}
+                />
+                <InputSlider
+                    title={"$USDC Balance"}
+                    state={usdcBalance}
+                    setState={updateUsdcBalance}
+                    max={50000}
                     prefix={"$"}
                 />
                 <InputSlider
@@ -53,12 +71,6 @@ const EarningsCalculator = () => {
                     max={5000000}
                     prefix={"$"}
                     suffix={" / 24h"}
-                />
-                <InputSlider title={"Reinvestment Rate"}
-                     state={reinvestmentRate}
-                     setState={setReinvestmentRate}
-                     max={100}
-                     suffix={"%"}
                 />
             </RaisedCard>
         </div>

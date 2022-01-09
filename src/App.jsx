@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Account from "components/Account/Account";
 import Chains from "components/Chains";
 import { Layout } from "antd";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import NativeBalance from "components/NativeBalance";
-import "./style.css";
+import "./style.less";
 import Dashboard from "./components/Dashboard/Dashboard";
 import logo from "./assets/logo-100x100.png";
 

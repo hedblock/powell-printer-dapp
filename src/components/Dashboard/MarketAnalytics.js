@@ -28,7 +28,7 @@ const MarketAnalytics = () => {
         "Pooled AVAX": parseInt(wavaxReserves).toLocaleString(),
         "Pooled POWL": parseInt(powlReserves).toLocaleString(),
         "Market Cap": "$" + parseInt(quoteUSD(totalSupply)).toLocaleString(),
-        "Locked Liquidity": "NEED THIS #"
+        // "Locked Liquidity": "NEED THIS #"
     }
 
     return (

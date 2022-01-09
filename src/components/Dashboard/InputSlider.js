@@ -1,7 +1,7 @@
 import React from 'react';
 import {Row, Col, Slider} from 'antd';
 
-const InputSlider = ({ state, setState, title, max, prefix, suffix }) => {
+const InputSlider = ({ state, setState, title, max, prefix, suffix, displayVal }) => {
 
     return (
         <Row style={{width: "100%"}}>
@@ -19,7 +19,9 @@ const InputSlider = ({ state, setState, title, max, prefix, suffix }) => {
                 />
             </Col>
             <Col span={4}>
-                <h3 style={{textAlign: 'center'}}>{prefix}{state.toLocaleString()}{suffix}</h3>
+                <h3 style={{textAlign: 'center'}}>{prefix}
+                {displayVal ? displayVal : state.toLocaleString()}{suffix}
+                </h3>
             </Col>
         </Row>
     )
