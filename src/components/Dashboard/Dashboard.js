@@ -24,19 +24,30 @@ const Dashboard = () => {
     const { isAuthenticated } = useMoralis();
     const { chainId } = useChain();
 
-    if(isAuthenticated && chainId === "0xa86a"){
-        return (
-            <div style={styles.container}>
-                <HoldingsAndEarnings />
-                <EarningsCalculator />
-                <MarketAnalytics />
-            </div>
-        )
+    if(isAuthenticated){
+        if( chainId === "0xa86a" ){
+            return (
+                <div style={styles.container}>
+                    <HoldingsAndEarnings />
+                    <EarningsCalculator />
+                    <MarketAnalytics />
+                </div>
+            )
+        } else {
+            return (
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <h2>You must be connected to the Avalanche Mainnet to view the Powell Printer dApp</h2>
+                    <p>Use the "Switch Network" button above to stitch chains.</p>
+                    <p>If you do not have Avalanche added to your wallet already, we will add it for you.</p>
+                </div>
+            )
+        }
+
     } else {
         return (
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                <h2>You must be connected to the Avalanche Mainnet to view the Powell Printer dApp</h2>
-                <p>Use the "Switch Network" button above to sitch chains</p>
+                <h2>You must connect your wallet to view the Powell Printer dApp</h2>
+                <p>Use the "Authenticate" button above to connect your wallet</p>
             </div>
         )
     }

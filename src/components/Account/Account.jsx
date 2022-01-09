@@ -2,7 +2,7 @@ import { useMoralis } from "react-moralis";
 import { getEllipsisTxt } from "helpers/formatters";
 import Blockie from "../Blockie";
 import { Button, Card, Modal } from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
 import Address from "../Address/Address";
 import { SelectOutlined } from "@ant-design/icons";
 import { getExplorer } from "helpers/networks";
@@ -51,11 +51,9 @@ function Account() {
   if (!isAuthenticated || !account) {
     return (
       <>
-        <div
-          onClick={() => setIsAuthModalVisible(true)}
-        >
-          <p style={styles.text}>Authenticate</p>
-        </div>
+        <Button type="primary" onClick={() => setIsAuthModalVisible(true)}>
+            Authenticate
+        </Button>
         <Modal
           visible={isAuthModalVisible}
           footer={null}
