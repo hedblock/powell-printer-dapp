@@ -37,7 +37,7 @@ const Dashboard = () => {
             return (
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <h2>You must be connected to the Avalanche Mainnet to view the Powell Printer dApp</h2>
-                    <p>Use the "Switch Network" button above to stitch chains.</p>
+                    <p>Use the "Switch Network" button above to switch chains.</p>
                     <p>If you do not have Avalanche added to your wallet already, we will add it for you.</p>
                 </div>
             )
