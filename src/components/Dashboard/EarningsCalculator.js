@@ -35,8 +35,11 @@ const EarningsCalculator = () => {
     const [tokenAppreciation, setTokenAppreciation] = useState(100);
 
     useEffect(() => {
-        if(!fetching) updatePowlBalance(userBalance);
-    }, [userBalance, fetching])
+        if(!fetching){
+            setPowlBalance(userBalance);
+            setUsdcBalance(quotePowlToUSD(userBalance));
+        }
+    }, [userBalance, quotePowlToUSD, fetching])
 
     const calculateTotalReflections = () => (volume * 0.12);
 
@@ -45,9 +48,7 @@ const EarningsCalculator = () => {
     const calculateExitValue = () => (usdcBalance * (tokenAppreciation / 100) * 0.81)
 
     const updatePowlBalance = (balance) => {
-        setPowlBalance(balance);
-        console.log(quotePowlToUSD(balance));
-        setUsdcBalance(quotePowlToUSD(balance));
+
     }
 
     const updateUsdcBalance = (balance) => {
