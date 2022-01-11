@@ -3,9 +3,10 @@ import React from "react";
 import Icon from "react-crypto-icons";
 import useEtherprintContract from "../../hooks/useEtherprintContract";
 import useDistributorContract from "../../hooks/useDistributorContract";
-import {c2} from "../../helpers/formatters";
+import {compact} from "../../helpers/formatters";
 import RaisedCard from "../utils/RaisedCard";
 import logo from "../../assets/logo-100x100.png";
+import usePairContract from "../../hooks/usePairContract";
 
 const styles = {
     container: {
@@ -38,13 +39,14 @@ const POWLIcon = () => (<img src={logo} style={{height: 50, width: 50, borderRad
 
 const HoldingsAndEarnings = () => {
 
-    const {userBalance} = useEtherprintContract();
-    const {totalDistributed, userEarnings, userUnpaidEarnings} = useDistributorContract();
+    const { userBalance } = useEtherprintContract();
+    const { quotePowlToUSD } = usePairContract();
+    const { userEarnings, userUnpaidEarnings, claimEarnings } = useDistributorContract();
 
     const cards = {
+        "Value ($USDC)": quotePowlToUSD(userBalance),
         "$POWL Balance": userBalance,
         "Claimed $USDC": userEarnings,
-        "Total Printed": totalDistributed,
         "Unclaimed $USDC": userUnpaidEarnings
     }
 
@@ -59,11 +61,11 @@ const HoldingsAndEarnings = () => {
                                 <div style={{display: 'flex', alignItems: 'center'}}>
                                     <div style={{marginRight: 'auto'}}>
                                         <span>{title}</span>
-                                        <h1>{c2.format(cards[title])}</h1>
+                                        <h1>{compact(cards[title])}</h1>
                                     </div>
                                     <div>
                                         {
-                                            index === 0
+                                            index === 1
                                             ? <POWLIcon />
                                             : <USDCIcon/>
                                         }
@@ -80,6 +82,7 @@ const HoldingsAndEarnings = () => {
                 shape={"round"}
                 style={{maxWidth: 200}}
                 block
+                onClick={claimEarnings}
             >
                 Claim Earnings
             </Button>

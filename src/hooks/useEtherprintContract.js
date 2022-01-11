@@ -11,31 +11,15 @@ const useEtherprintContract = () => {
     const [userBalance, setUserBalance] = useState(0);
     const [fetching, setFetching] = useState(true);
 
-    // const getUserApprovedBalance = useCallback(async (spender) => {
-    //     console.log('getApp');
-    //     return call("Spurs", 'allowance', {owner: account, spender})
-    //         .then(balance => {
-    //             setUserApprovedBalances(u => ({...u, [spender]: Number(balance)}));
-    //         })
-    // }, [call, account]);
-    //
-    // const increaseAllowance = async (spender, addedValue) => {
-    //     return executeFunction({
-    //         contractName: "Spurs",
-    //         functionName: 'increaseAllowance',
-    //         params: {spender, addedValue}
-    //     }).then(() => {
-    //         return getUserApprovedBalance(spender);
-    //     })
-    // }
+    const toPowl = (val) => (val / 10 ** 6);
 
     useEffect(() => {
         if (!isWeb3Enabled) return null;
         Promise.all([
             call("Etherprint", "totalSupply")
-                .then((data) => setTotalSupply(Number(web3.utils.fromWei(data, "mwei")))),
+                .then((data) => setTotalSupply(toPowl(Number(data)))),
             call("Etherprint", "balanceOf", {account})
-                .then((data) => setUserBalance(Number(web3.utils.fromWei(data, "mwei")))),
+                .then((data) => setUserBalance(toPowl(Number(data)))),
         ]).then(() => {
             console.log()
             setFetching(false);

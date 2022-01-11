@@ -18,7 +18,6 @@ const styles = {
     justifyContent: "center",
     fontFamily: "Roboto, sans-serif",
     color: "#041836",
-    padding: "10px",
     marginTop: "130px",
   },
   header: {

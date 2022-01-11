@@ -3,6 +3,7 @@ import useEtherprintContract from "../../hooks/useEtherprintContract";
 import usePairContract from "../../hooks/usePairContract";
 import RaisedCard from "../utils/RaisedCard";
 import {Row, Card, Col} from "antd";
+import useDistributorContract from "../../hooks/useDistributorContract";
 
 const styles = {
     container: {
@@ -20,15 +21,16 @@ const styles = {
 const MarketAnalytics = () => {
 
     const { totalSupply } = useEtherprintContract();
-    const { wavaxReserves, powlReserves, quoteUSD, quoteAVAX } = usePairContract();
+    const { totalDistributed } = useDistributorContract();
+    const { wavaxReserves, powlReserves, quotePowlToUSD, quotePowlToAvax } = usePairContract();
 
     const metrics = {
-        "Price USD": "$" + quoteUSD(1).toExponential(3),
-        "Price AVAX": quoteAVAX(1).toExponential(3),
-        "Pooled AVAX": parseInt(wavaxReserves).toLocaleString(),
+        "Price USD": "$" + quotePowlToUSD(1).toExponential(3),
+        "Price AVAX": quotePowlToAvax(1).toExponential(3) + " AVAX",
+        "Pooled AVAX": wavaxReserves.toLocaleString(),
         "Pooled POWL": parseInt(powlReserves).toLocaleString(),
-        "Market Cap": "$" + parseInt(quoteUSD(totalSupply)).toLocaleString(),
-        // "Locked Liquidity": "NEED THIS #"
+        "Market Cap": "$" + parseInt(quotePowlToUSD(totalSupply)).toLocaleString(),
+        "Total Distributed": totalDistributed
     }
 
     return (

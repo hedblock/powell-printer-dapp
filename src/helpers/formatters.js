@@ -1,3 +1,5 @@
+const numeral = require('numeral');
+
 export const n6 = new Intl.NumberFormat("en-us", {
   style: "decimal",
   minimumFractionDigits: 6,
@@ -14,6 +16,8 @@ export const c2 = new Intl.NumberFormat("en-us", {
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
+
+export const compact = (val) => numeral(val).format('0.0000a');
 
 /**
  * Returns a string of form "abc...xyz"
