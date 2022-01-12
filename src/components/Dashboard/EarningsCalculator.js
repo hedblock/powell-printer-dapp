@@ -11,7 +11,6 @@ import {Row, Col, Select, Button, InputNumber, Divider} from 'antd';
 const styles = {
     container: {
         width: "100%",
-        padding: "0 64px",
         display: "flex",
         flexDirection: "column",
         alignItems: 'center',

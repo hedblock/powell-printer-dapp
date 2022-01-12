@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Account from "components/Account/Account";
 import Chains from "components/Chains";
 import { Layout } from "antd";
-// import "antd/dist/antd.css";
 import NativeBalance from "components/NativeBalance";
 import "./style.less";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -50,15 +49,25 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, isWeb3Enabled]);
 
+  useEffect(() => {
+
+  })
+
+  console.log(window.innerWidth);
+
   return (
     <Layout style={{ height: "100vh", overflow: "auto", background: "#fff" }}>
       <Router>
         <Header style={styles.header}>
           <Logo />
-          <h2 style={{marginRight: "auto", marginLeft: "32px"}}>Powell Printer</h2>
+          {
+            window.innerWidth > 650 && <h2 style={{marginRight: "auto", marginLeft: "32px"}}>Powell Printer</h2>
+          }
           <div style={styles.headerRight}>
             <Chains />
-            <NativeBalance />
+            {
+              window.innerWidth > 500 && <NativeBalance />
+            }
             <Account />
           </div>
         </Header>

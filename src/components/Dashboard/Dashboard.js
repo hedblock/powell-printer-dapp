@@ -8,7 +8,7 @@ import {useChain, useMoralis} from "react-moralis";
 const styles = {
     container: {
         width: "100%",
-        padding: "0 10%",
+        padding: "0 5vw",
         display: "flex",
         flexDirection: "column",
         alignItems: 'center'

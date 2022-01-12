@@ -6,10 +6,10 @@ const InputSlider = ({ state, setState, title, max, prefix, suffix, displayVal }
 
     return (
         <Row style={{width: "100%"}}>
-            <Col md={24} lg={6}>
+            <Col xs={24} lg={6}>
                 <h3>{title}</h3>
             </Col>
-            <Col span={12}>
+            <Col xs={16} lg={12}>
                 <Slider
                     min={0}
                     max={max}
@@ -20,7 +20,7 @@ const InputSlider = ({ state, setState, title, max, prefix, suffix, displayVal }
                     tooltipVisible={false}
                 />
             </Col>
-            <Col md={12} lg={6}>
+            <Col xs={8} lg={6}>
                 <h3 style={{textAlign: 'center'}}>{prefix}
                     {displayVal !== undefined ? displayVal : compact(state)}{suffix}
                 </h3>
