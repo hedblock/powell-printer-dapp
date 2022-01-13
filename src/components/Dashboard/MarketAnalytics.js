@@ -9,6 +9,7 @@ const styles = {
     container: {
         width: "100%",
         display: "flex",
+        marginBottom: '32px',
         flexDirection: "column",
         alignItems: 'center'
     },
@@ -34,8 +35,8 @@ const MarketAnalytics = () => {
 
     return (
         <div style={styles.container}>
-            <h1 style={{marginBottom: "16px"}}>Market Analytics</h1>
             <RaisedCard style={styles.card}>
+                <h1 style={{marginBottom: "16px"}}>Market Analytics</h1>
                 <Row gutter={[16, 16]}>
                     {
                         Object.keys(metrics).map(metric => (

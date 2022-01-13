@@ -29,10 +29,14 @@ const usePairContract = () => {
         setAvaxPrice(Number(reserves._reserve0) * (10 ** 12) / Number(reserves._reserve1));
     }, [call])
 
-    const quoteAvaxToPowl = (amountAvax) => ( amountAvax * powlReserves / wavaxReserves )
-    const quoteUSDToPowl = (amountUSD) => (quoteAvaxToPowl(amountUSD / avaxPrice))
-    const quotePowlToAvax = (amountPowl) => ( amountPowl * wavaxReserves / powlReserves )
-    const quotePowlToUSD = (amountPowl) => ( avaxPrice * quotePowlToAvax(amountPowl) );
+    const quoteAvaxToPowl = useCallback((amountAvax) => ( amountAvax * powlReserves / wavaxReserves ),
+        [powlReserves, wavaxReserves])
+    const quoteUSDToPowl = useCallback((amountUSD) => (quoteAvaxToPowl(amountUSD / avaxPrice)),
+        [quoteAvaxToPowl, avaxPrice])
+    const quotePowlToAvax = useCallback((amountPowl) => ( amountPowl * wavaxReserves / powlReserves ),
+        [wavaxReserves, powlReserves])
+    const quotePowlToUSD = useCallback((amountPowl) => ( avaxPrice * quotePowlToAvax(amountPowl) ),
+        [avaxPrice, quotePowlToAvax]);
 
     useEffect(() => {
         if (!isWeb3Enabled) return null;

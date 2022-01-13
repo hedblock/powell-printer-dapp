@@ -34,6 +34,7 @@ const EarningsCalculator = () => {
     const [tokenAppreciation, setTokenAppreciation] = useState(100);
 
     useEffect(() => {
+        console.log('effect');
         if(!fetching){
             setPowlBalance(userBalance);
             setUsdcBalance(quotePowlToUSD(userBalance));
@@ -62,8 +63,8 @@ const EarningsCalculator = () => {
 
     return (
         <div style={styles.container}>
-            <h1 style={{marginBottom: "16px"}}>Earnings Calculator</h1>
             <RaisedCard style={styles.card}>
+                <h1 style={{marginBottom: "16px"}}>Earnings Calculator</h1>
                 <h3 style={{marginBottom: 16}}>Enter an amount of {inputUnit}</h3>
                 <Row gutter={[16, 16]} style={{marginBottom: 16}}>
                     <Col md={24} lg={18}>
