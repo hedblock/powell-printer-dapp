@@ -32,9 +32,9 @@ const EarningsCalculator = () => {
     const [powlBalance, setPowlBalance] = useState(0);
     const [volume, setVolume] = useState(0);
     const [tokenAppreciation, setTokenAppreciation] = useState(100);
+    const [days, setDays] = useState(1);
 
     useEffect(() => {
-        console.log('effect');
         if(!fetching){
             setPowlBalance(userBalance);
             setUsdcBalance(quotePowlToUSD(userBalance));
@@ -61,12 +61,15 @@ const EarningsCalculator = () => {
     const onBalanceChange = (balance) => inputUnit === "$USDC" ? updateUsdcBalance(balance) : updatePowlBalance(balance);
     const useCurrentBalance = () => updatePowlBalance(userBalance);
 
+    const profitLoss = calculateExitValue() - usdcBalance;
+    const netGain = profitLoss + calculateEarnings(days);
+
     return (
         <div style={styles.container}>
             <RaisedCard style={styles.card}>
                 <h1 style={{marginBottom: "16px"}}>Earnings Calculator</h1>
                 <h3 style={{marginBottom: 16}}>Enter an amount of {inputUnit}</h3>
-                <Row gutter={[16, 16]} style={{marginBottom: 16}}>
+                <Row gutter={[32, 16]} style={{marginBottom: 16}}>
                     <Col md={24} lg={18}>
                         <InputNumber
                             addonBefore={
@@ -87,7 +90,7 @@ const EarningsCalculator = () => {
                             onClick={useCurrentBalance}
                             size={'large'}
                         >
-                            Use Current Balance
+                            Current Balance
                         </Button>
                     </Col>
                 </Row>
@@ -115,8 +118,22 @@ const EarningsCalculator = () => {
                     suffix={"%"}
                 />
                 <Divider />
-                <h3>Exit Value: {c2.format(calculateExitValue())} $USDC</h3>
-                <h3 style={{color: "#2775CA"}}>Your Profit (Loss): {c2.format(calculateExitValue() - usdcBalance)} $USDC</h3>
+                <h3>Sale Value: {c2.format(calculateExitValue())} $USDC</h3>
+                <h3 style={{color: "#2775CA"}}>Sale Profit (Loss): {profitLoss > 0 ? c2.format(profitLoss) :
+                    `(${c2.format(Math.abs(profitLoss))})`} $USDC</h3>
+                <Divider />
+                <InputSlider
+                    title={"Days Held"}
+                    state={days}
+                    displayVal={days}
+                    setState={setDays}
+                    min={0}
+                    max={60}
+                />
+                <Divider />
+                <h3>Exit Value: {c2.format(calculateEarnings(days) + calculateExitValue())} $USDC</h3>
+                <h3 style={{color: "#2775CA"}}>Your Net Gain (Loss): {netGain > 0 ? c2.format(netGain) :
+                    `(${c2.format(Math.abs(netGain))})`} $USDC</h3>
             </RaisedCard>
         </div>
     )

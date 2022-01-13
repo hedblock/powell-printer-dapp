@@ -25,12 +25,12 @@ const MarketAnalytics = () => {
     const { wavaxReserves, powlReserves, quotePowlToUSD, quotePowlToAvax } = usePairContract();
 
     const metrics = {
-        "Price USD": "$" + quotePowlToUSD(1).toExponential(3),
-        "Price AVAX": quotePowlToAvax(1).toExponential(3) + " AVAX",
-        "Pooled AVAX": wavaxReserves.toLocaleString(),
-        "Pooled POWL": parseInt(powlReserves).toLocaleString(),
+        "Price $USDC": "$" + quotePowlToUSD(1).toExponential(3),
+        "Price $AVAX": quotePowlToAvax(1).toExponential(3) + " $AVAX",
+        "$AVAX Liquidity": wavaxReserves.toLocaleString(),
+        "$POWL Liquidity": parseInt(powlReserves).toLocaleString(),
         "Market Cap": "$" + parseInt(quotePowlToUSD(totalSupply)).toLocaleString(),
-        "Total Distributed": totalDistributed
+        "Total Distributed $USDC": totalDistributed
     }
 
     return (
