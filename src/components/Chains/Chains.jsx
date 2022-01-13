@@ -33,7 +33,7 @@ const avalancheChain = {
 
 function Chains() {
   const { switchNetwork, chainId } = useChain();
-  const { Moralis, isAuthenticated } = useMoralis();
+  const { Moralis } = useMoralis();
 
   const handleClick = async (e) => {
     try {
@@ -50,7 +50,7 @@ function Chains() {
     }
   };
 
-  if (!chainId || !isAuthenticated) return null;
+  if (!chainId) return null;
 
   return (
     <div>

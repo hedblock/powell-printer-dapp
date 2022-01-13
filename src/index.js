@@ -4,10 +4,15 @@ import App from "./App";
 import { MoralisProvider } from "react-moralis";
 import "./index.css";
 
-/** Get your free Moralis Account https://moralis.io/ */
+import { Web3ReactProvider } from '@web3-react/core'
+import Web3 from 'web3'
 
 const APP_ID = process.env.REACT_APP_MORALIS_APPLICATION_ID;
 const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER_URL;
+
+function getLibrary(provider) {
+  return new Web3(provider)
+}
 
 const Application = () => {
   const isServerInfo = APP_ID && SERVER_URL ? true : false;
@@ -15,9 +20,11 @@ const Application = () => {
   if(!APP_ID || !SERVER_URL) throw new Error("Missing Moralis Application ID or Server URL. Make sure to set your .env file.");
   if (isServerInfo)
     return (
-      <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
-        <App isServerInfo />
-      </MoralisProvider>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
+          <App isServerInfo />
+        </MoralisProvider>
+      </Web3ReactProvider>
     );
   else {
     return (

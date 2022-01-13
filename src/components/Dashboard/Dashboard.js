@@ -21,10 +21,10 @@ const styles = {
 
 const Dashboard = () => {
 
-    const { isAuthenticated } = useMoralis();
+    const { isWeb3Enabled } = useMoralis();
     const { chainId } = useChain();
 
-    if(isAuthenticated){
+    if(isWeb3Enabled){
         if( chainId === "0xa86a" ){
             return (
                 <div style={styles.container}>

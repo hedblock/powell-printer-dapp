@@ -47,7 +47,8 @@ const EarningsCalculator = () => {
     const calculateExitValue = () => (usdcBalance * (tokenAppreciation / 100) * 0.81)
 
     const updatePowlBalance = (balance) => {
-
+        setUsdcBalance(quotePowlToUSD(balance));
+        setPowlBalance(balance);
     }
 
     const updateUsdcBalance = (balance) => {

@@ -41,19 +41,13 @@ const styles = {
   },
 };
 const App = () => {
-  const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } = useMoralis();
+  const { isWeb3Enabled, enableWeb3, isWeb3EnableLoading } = useMoralis();
 
   useEffect(() => {
     const connectorId = window.localStorage.getItem("connectorId");
-    if (isAuthenticated && !isWeb3Enabled && !isWeb3EnableLoading) enableWeb3({ provider: connectorId });
+    if (!isWeb3Enabled && !isWeb3EnableLoading) enableWeb3({ provider: connectorId });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, isWeb3Enabled]);
-
-  useEffect(() => {
-
-  })
-
-  console.log(window.innerWidth);
+  }, [isWeb3Enabled]);
 
   return (
     <Layout style={{ height: "100vh", overflow: "auto", background: "#fff" }}>
