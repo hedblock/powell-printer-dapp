@@ -40,7 +40,7 @@ const MarketAnalytics = () => {
                 <Row gutter={[16, 16]}>
                     {
                         Object.keys(metrics).map(metric => (
-                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12} key={metric}>
                                 <Card style={{height: "100%"}}>
                                     <div style={{display: 'flex', alignItems: 'center'}}>
                                         <div>

@@ -64,7 +64,7 @@ const HoldingsAndEarnings = () => {
                     <Row gutter={[16, 16]} style={styles.row}>
                         {
                             Object.keys(cards).map((title, index) => (
-                                <Col xs={24} sm={24} md={12} lg={12}>
+                                <Col xs={24} sm={24} md={12} lg={12} key={title}>
                                     <RaisedCard style={{height: "100%"}}>
                                         <div style={{display: 'flex', alignItems: 'center'}}>
                                             <div style={{marginRight: 'auto'}}>

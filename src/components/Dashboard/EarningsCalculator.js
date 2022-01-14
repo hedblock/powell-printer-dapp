@@ -7,6 +7,7 @@ import RaisedCard from "../utils/RaisedCard";
 import useDistributorContract from "../../hooks/useDistributorContract";
 
 import {Row, Col, Select, Button, InputNumber, Divider} from 'antd';
+import {useMoralisCloudFunction} from "react-moralis";
 
 const styles = {
     container: {
@@ -22,6 +23,8 @@ const styles = {
 }
 
 const EarningsCalculator = () => {
+
+    const { data, error, isLoading } = useMoralisCloudFunction('get24HrVolume');
 
     const { userBalance } = useEtherprintContract();
     const { totalShares } = useDistributorContract();
@@ -39,7 +42,12 @@ const EarningsCalculator = () => {
             setPowlBalance(userBalance);
             setUsdcBalance(quotePowlToUSD(userBalance));
         }
-    }, [userBalance, quotePowlToUSD, fetching])
+    }, [userBalance, quotePowlToUSD, fetching]);
+
+    useEffect(() => {
+        if(error) console.log(error);
+        else console.log(data);
+    }, [isLoading, data, error])
 
     const calculateTotalReflections = () => (volume * 0.12);
 
