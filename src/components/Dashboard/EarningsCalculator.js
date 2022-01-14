@@ -7,7 +7,7 @@ import RaisedCard from "../utils/RaisedCard";
 import useDistributorContract from "../../hooks/useDistributorContract";
 
 import {Row, Col, Select, Button, InputNumber, Divider} from 'antd';
-import {useMoralisCloudFunction} from "react-moralis";
+import {useMoralisQuery} from "react-moralis";
 
 const styles = {
     container: {
@@ -24,7 +24,9 @@ const styles = {
 
 const EarningsCalculator = () => {
 
-    const { data, error, isLoading } = useMoralisCloudFunction('get24HrVolume');
+    const { data } = useMoralisQuery("MarketStats",
+query => query.descending("createdAt").limit(1)
+    );
 
     const { userBalance } = useEtherprintContract();
     const { totalShares } = useDistributorContract();
@@ -34,6 +36,7 @@ const EarningsCalculator = () => {
     const [usdcBalance, setUsdcBalance] = useState(0);
     const [powlBalance, setPowlBalance] = useState(0);
     const [volume, setVolume] = useState(0);
+    const [volumeMultiplier, setVolumeMultiplier] = useState(100);
     const [tokenAppreciation, setTokenAppreciation] = useState(100);
     const [days, setDays] = useState(1);
 
@@ -45,11 +48,10 @@ const EarningsCalculator = () => {
     }, [userBalance, quotePowlToUSD, fetching]);
 
     useEffect(() => {
-        if(error) console.log(error);
-        else console.log(data);
-    }, [isLoading, data, error])
+        if(data.length > 0) setVolume(data[0].attributes.volume24HrUsd);
+    }, [data])
 
-    const calculateTotalReflections = () => (volume * 0.12);
+    const calculateTotalReflections = () => (volume * volumeMultiplier / 100 * 0.12);
 
     const calculateEarnings = (days) => (calculateTotalReflections() * powlBalance / Number(totalShares + powlBalance - userBalance) * days)
 
@@ -104,16 +106,18 @@ const EarningsCalculator = () => {
                 </Row>
                 <h3>{inputUnit === "$USDC" ? "$POWL" : "$USDC"} Equivalent: {(inputUnit === "$USDC" ? powlBalance : usdcBalance).toLocaleString()}</h3>
                 <Divider />
+                <h3>Current 24hr Volume: ${c2.format(volume)}</h3>
                 <InputSlider
-                    title={"24hr Volume"}
-                    state={volume}
-                    setState={setVolume}
-                    max={500000}
-                    prefix={"$"}
-                    suffix={" / 24h"}
+                    title={"Volume Multiplier"}
+                    state={volumeMultiplier}
+                    setState={setVolumeMultiplier}
+                    max={1000}
+                    displayVal={volumeMultiplier / 100}
+                    suffix={"x"}
                 />
                 <Divider />
-                <h3>Total Reflections: {c2.format(calculateTotalReflections())} / 24hr</h3>
+                <h3>Projected Volume: ${c2.format(volume * volumeMultiplier / 100)} / 24hr</h3>
+                <h3>Total Reflections: ${c2.format(calculateTotalReflections())} / 24hr</h3>
                 <h3 style={{color: "#2775CA"}}>Your Projected Reflections: ${c2.format(calculateEarnings(1))} / 24hr</h3>
                 <Divider />
                 <InputSlider

@@ -35,8 +35,8 @@ const getBlockWrapper = async (web3, block) => {
 
 // pair utils
 
-const quotePowlToUsd = (web3, amountPowl) => {
-    return quoteAvaxToUsd(web3, quotePowlToAvax(web3, amountPowl));
+const quotePowlToUsd = async (web3, amountPowl) => {
+    return quoteAvaxToUsd(web3, await quotePowlToAvax(web3, amountPowl));
 }
 
 // Need to update this if token0 and token1 change
